@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MedicDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDoctor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Room" Type="int" />
+          <Property Name="Speciality" Type="int" />
+          <Property Name="MedDistrict" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMedDistrict">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPatient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="MedDistrict" Type="int" />
+        </EntityType>
+        <EntityType Name="tblRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSpeciality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_tblDoctor_tblMedDistrict">
+          <End Role="tblMedDistrict" Type="Self.tblMedDistrict" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="MedDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDoctor_tblRoom">
+          <End Role="tblRoom" Type="Self.tblRoom" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRoom">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="Room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDoctor_tblSpeciality">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="Speciality" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatient_tblMedDistrict">
+          <End Role="tblMedDistrict" Type="Self.tblMedDistrict" Multiplicity="0..1" />
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="MedDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicDBModelStoreContainer">
+          <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMedDistrict" EntityType="Self.tblMedDistrict" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPatient" EntityType="Self.tblPatient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRoom" EntityType="Self.tblRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSpeciality" EntityType="Self.tblSpeciality" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblDoctor_tblMedDistrict" Association="Self.FK_tblDoctor_tblMedDistrict">
+            <End Role="tblMedDistrict" EntitySet="tblMedDistrict" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDoctor_tblRoom" Association="Self.FK_tblDoctor_tblRoom">
+            <End Role="tblRoom" EntitySet="tblRoom" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDoctor_tblSpeciality" Association="Self.FK_tblDoctor_tblSpeciality">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatient_tblMedDistrict" Association="Self.FK_tblPatient_tblMedDistrict">
+            <End Role="tblMedDistrict" EntitySet="tblMedDistrict" />
+            <End Role="tblPatient" EntitySet="tblPatient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MedicDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDoctor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Room" Type="Int32" />
+          <Property Name="Speciality" Type="Int32" />
+          <Property Name="MedDistrict" Type="Int32" />
+          <NavigationProperty Name="tblMedDistrict" Relationship="Self.FK_tblDoctor_tblMedDistrict" FromRole="tblDoctor" ToRole="tblMedDistrict" />
+          <NavigationProperty Name="tblSpeciality" Relationship="Self.FK_tblDoctor_tblSpeciality" FromRole="tblDoctor" ToRole="tblSpeciality" />
+          <NavigationProperty Name="tblRoom" Relationship="MedicDBModel.FK_tblDoctor_tblRoom" FromRole="tblDoctor" ToRole="tblRoom" />
+        </EntityType>
+        <EntityType Name="tblMedDistrict">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tblDoctor" Relationship="Self.FK_tblDoctor_tblMedDistrict" FromRole="tblMedDistrict" ToRole="tblDoctor" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblPatient" Relationship="MedicDBModel.FK_tblPatient_tblMedDistrict" FromRole="tblMedDistrict" ToRole="tblPatient" />
+        </EntityType>
+        <EntityType Name="tblSpeciality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblDoctor" Relationship="Self.FK_tblDoctor_tblSpeciality" FromRole="tblSpeciality" ToRole="tblDoctor" />
+        </EntityType>
+        <Association Name="FK_tblDoctor_tblMedDistrict">
+          <End Role="tblMedDistrict" Type="Self.tblMedDistrict" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="MedDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDoctor_tblSpeciality">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="0..1" />
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="Speciality" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" />
+          <EntitySet Name="tblMedDistrict" EntityType="Self.tblMedDistrict" />
+          <EntitySet Name="tblSpeciality" EntityType="Self.tblSpeciality" />
+          <AssociationSet Name="FK_tblDoctor_tblMedDistrict" Association="Self.FK_tblDoctor_tblMedDistrict">
+            <End Role="tblMedDistrict" EntitySet="tblMedDistrict" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDoctor_tblSpeciality" Association="Self.FK_tblDoctor_tblSpeciality">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <EntitySet Name="tblRoom" EntityType="MedicDBModel.tblRoom" />
+          <AssociationSet Name="FK_tblDoctor_tblRoom" Association="MedicDBModel.FK_tblDoctor_tblRoom">
+            <End Role="tblRoom" EntitySet="tblRoom" />
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
+          </AssociationSet>
+          <EntitySet Name="tblPatient" EntityType="MedicDBModel.tblPatient" />
+          <AssociationSet Name="FK_tblPatient_tblMedDistrict" Association="MedicDBModel.FK_tblPatient_tblMedDistrict">
+            <End Role="tblMedDistrict" EntitySet="tblMedDistrict" />
+            <End Role="tblPatient" EntitySet="tblPatient" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblDoctor" Relationship="MedicDBModel.FK_tblDoctor_tblRoom" FromRole="tblRoom" ToRole="tblDoctor" />
+        </EntityType>
+        <Association Name="FK_tblDoctor_tblRoom">
+          <End Type="MedicDBModel.tblRoom" Role="tblRoom" Multiplicity="0..1" />
+          <End Type="MedicDBModel.tblDoctor" Role="tblDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRoom">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblDoctor">
+              <PropertyRef Name="Room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblPatient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="MedDistrict" Type="Int32" />
+          <NavigationProperty Name="tblMedDistrict" Relationship="MedicDBModel.FK_tblPatient_tblMedDistrict" FromRole="tblPatient" ToRole="tblMedDistrict" />
+        </EntityType>
+        <Association Name="FK_tblPatient_tblMedDistrict">
+          <End Type="MedicDBModel.tblMedDistrict" Role="tblMedDistrict" Multiplicity="0..1" />
+          <End Type="MedicDBModel.tblPatient" Role="tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatient">
+              <PropertyRef Name="MedDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MedicDBModelStoreContainer" CdmEntityContainer="MedicDB">
+          <EntitySetMapping Name="tblDoctor">
+            <EntityTypeMapping TypeName="MedicDBModel.tblDoctor">
+              <MappingFragment StoreEntitySet="tblDoctor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+                <ScalarProperty Name="MedDistrict" ColumnName="MedDistrict" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMedDistrict">
+            <EntityTypeMapping TypeName="MedicDBModel.tblMedDistrict">
+              <MappingFragment StoreEntitySet="tblMedDistrict">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSpeciality">
+            <EntityTypeMapping TypeName="MedicDBModel.tblSpeciality">
+              <MappingFragment StoreEntitySet="tblSpeciality">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoom">
+            <EntityTypeMapping TypeName="MedicDBModel.tblRoom">
+              <MappingFragment StoreEntitySet="tblRoom">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPatient">
+            <EntityTypeMapping TypeName="MedicDBModel.tblPatient">
+              <MappingFragment StoreEntitySet="tblPatient">
+                <ScalarProperty Name="MedDistrict" ColumnName="MedDistrict" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
